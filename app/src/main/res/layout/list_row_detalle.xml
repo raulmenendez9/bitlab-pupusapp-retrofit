@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:orientation="horizontal"
+    android:id="@+id/pruebaFragmentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <TextView
+      android:id="@+id/lineItemDetail1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/pupusa_line_item_description"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="5dp"/>
+
+  <TextView
+      android:id="@+id/lineItemPrice1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/pupusa_line_item_price"
+      android:layout_marginStart="160dp"
+      android:layout_marginTop="5dp"/>
+
+</LinearLayout>
