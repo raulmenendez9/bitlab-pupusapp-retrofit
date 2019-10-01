@@ -17,4 +17,6 @@
   <string name="pupusa_line_item_price">$%1$f</string>
   <string name="Relleno">Relleno</string>
   <string name="Relleno2">Relleno2</string>
+  <string name="Ver_historial">ver historial</string>
+  <string name="ver_detalle">ver detalle</string>
 </resources>

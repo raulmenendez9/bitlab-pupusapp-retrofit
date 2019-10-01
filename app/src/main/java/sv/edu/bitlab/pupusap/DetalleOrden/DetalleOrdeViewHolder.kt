@@ -14,7 +14,7 @@ class DetalleOrdeViewHolder(itemView: View, val listener: DetalleListener):Recyc
     var detalle: TextView = itemView.findViewById(R.id.lineItemDetail1)
     var precio: TextView = itemView.findViewById(R.id.lineItemPrice1)
 
-    detalle.text=orden.status
+    detalle.text= orden.maiz.toString()
    //precio.text= orden.id
 
     //listener.displayDetalle(orden.maiz, precio)

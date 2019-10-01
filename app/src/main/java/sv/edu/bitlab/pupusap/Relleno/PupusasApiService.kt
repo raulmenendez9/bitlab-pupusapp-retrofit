@@ -13,7 +13,7 @@ interface PupusasApiService{
   @GET("rellenos/")
   fun getRellenos(): Call<List<Relleno>>
 
-  @GET("ordenes/")
+  @GET("ordens/")
   fun getOrdenes(): Call<List<Orden>>
 
   @POST("orden/")

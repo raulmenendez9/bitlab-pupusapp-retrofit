@@ -1,9 +1,11 @@
 package sv.edu.bitlab.pupusap.DetalleOrden
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import sv.edu.bitlab.pupusap.HistoryScreen.HistoryActivity
 import sv.edu.bitlab.pupusap.Models.Orden
 import sv.edu.bitlab.pupusap.R
 import sv.edu.bitlab.pupusap.Relleno.ApiService
@@ -24,9 +27,11 @@ class  DetalleOrdeActivity : AppCompatActivity(), DetalleOrdeViewHolder.DetalleL
   var maiz= arrayListOf<Int>()
   var arroz = arrayListOf<Int>()
 
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.detalle_orden_activity)
+
 
     var recyclerDetalle = findViewById<RecyclerView>(R.id.recyclerDetalle)
     recyclerDetalle.layoutManager = LinearLayoutManager(this)
@@ -89,6 +94,8 @@ class  DetalleOrdeActivity : AppCompatActivity(), DetalleOrdeViewHolder.DetalleL
   fun getContent(): Context {
     return this
   }
+
+
   override fun displayDetalle(detalle: TextView, precio: TextView, contador: Int, index: Int) {
     var total = 0.0f
     if (contador>0){

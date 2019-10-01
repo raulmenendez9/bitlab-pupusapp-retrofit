@@ -17,6 +17,7 @@ import retrofit2.Response
 import sv.edu.bitlab.pupusap.DetalleOrden.DetalleOrdeActivity
 import sv.edu.bitlab.pupusap.DetalleOrden.DetalleOrdeActivity.Companion.CONTADOR_ARROZ
 import sv.edu.bitlab.pupusap.DetalleOrden.DetalleOrdeActivity.Companion.CONTADOR_MAIZ
+import sv.edu.bitlab.pupusap.HistoryScreen.HistoryActivity
 import sv.edu.bitlab.pupusap.Models.Relleno
 import sv.edu.bitlab.pupusap.Models.RellenoWrapper
 import sv.edu.bitlab.pupusap.Models.TakenOrden
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(), MainViewHolder.MainItemListener {
     var loadingContainer: View? = null
 
     var sendButton: Button? = null
+  var historialButton: Button? = null
 
     //var recyclerView:RecyclerView? = null
 
@@ -60,6 +62,10 @@ class MainActivity : AppCompatActivity(), MainViewHolder.MainItemListener {
         sendButton!!.setOnClickListener {
             confirmarOrden()
         }
+      historialButton = findViewById(R.id.button)
+      historialButton!!.setOnClickListener {
+        mostrarHistorial()
+      }
 
         val loadingContainer = findViewById<View>(R.id.loadingContainer)
       val orden = TakenOrden()
@@ -188,6 +194,11 @@ class MainActivity : AppCompatActivity(), MainViewHolder.MainItemListener {
       intent.putExtra(CONTADOR_ARROZ, arroz)*/
         this.startActivity(intent)
     }
+
+  fun mostrarHistorial(){
+    val intent = Intent(this, HistoryActivity::class.java)
+    this.startActivity(intent)
+  }
 
     fun showLoading(show: Boolean) {
         val visibility = if(show) View.VISIBLE else View.GONE
