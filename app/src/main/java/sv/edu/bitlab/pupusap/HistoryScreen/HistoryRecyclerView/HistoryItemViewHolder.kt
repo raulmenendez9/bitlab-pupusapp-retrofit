@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import sv.edu.bitlab.pupusap.Models.Orden
 import sv.edu.bitlab.pupusap.Models.TakenOrden
 import sv.edu.bitlab.pupusap.R
 
@@ -18,7 +19,7 @@ class HistoryItemViewHolder(itemView : View, val listener:OrdenItemListener) : R
   var editText:EditText? = null
 
 
-  fun bindData(orden: TakenOrden) {
+  fun bindData(orden: Orden) {
 
     fechaTxt = itemView.findViewById(R.id.fechaTxt)
     totalTxt = itemView.findViewById(R.id.totalTxt)

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sv.edu.bitlab.pupusap.HistoryScreen.HistoryRecyclerView.HistoryItemViewHolder
 import sv.edu.bitlab.pupusap.HistoryScreen.HistoryRecyclerView.OrdenAdapter
+import sv.edu.bitlab.pupusap.Models.Orden
 import sv.edu.bitlab.pupusap.Models.TakenOrden
 
 import sv.edu.bitlab.pupusap.R
@@ -57,7 +58,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
     super.onViewCreated(view, savedInstanceState)
     listView = view.findViewById(R.id.ordersListView)
     listView!!.layoutManager = LinearLayoutManager(this.context)
-    listView!!.adapter = OrdenAdapter(orderLists, this)
+    listView!!.adapter = OrdenAdapter(arrayListOf<Orden>(), listener = this)
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -132,9 +133,9 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
     fragment.arguments = params
     return fragment*/
     @JvmStatic
-    fun newInstance(orderList: ArrayList<TakenOrden>) : HistoryListFragment {
+    fun newInstance(orderList: List<Orden>) : HistoryListFragment {
       val params = Bundle()
-      params.putParcelableArrayList(ORDERS_LIST, orderList)
+      params.putParcelableArrayList(ORDERS_LIST,orderList)
       val fragment = HistoryListFragment()
       fragment.arguments = params
       return fragment

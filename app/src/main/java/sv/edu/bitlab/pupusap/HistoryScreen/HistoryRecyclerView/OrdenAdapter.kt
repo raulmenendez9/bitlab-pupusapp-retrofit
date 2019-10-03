@@ -3,11 +3,10 @@ package sv.edu.bitlab.pupusap.HistoryScreen.HistoryRecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import sv.edu.bitlab.pupusap.Models.TakenOrden
+import sv.edu.bitlab.pupusap.Models.Orden
 import sv.edu.bitlab.pupusap.R
-import kotlin.collections.ArrayList
 
-class OrdenAdapter(var ordenes: ArrayList<TakenOrden>,
+class OrdenAdapter(var orden: List<Orden>,
                    val listener: HistoryItemViewHolder.OrdenItemListener
 ) : RecyclerView.Adapter<HistoryItemViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {
@@ -17,11 +16,11 @@ class OrdenAdapter(var ordenes: ArrayList<TakenOrden>,
   }
 
   override fun getItemCount(): Int {
-    return ordenes.size
+    return orden.size
   }
 
   override fun onBindViewHolder(holder: HistoryItemViewHolder, position: Int) {
-    holder.bindData(ordenes[position])
+    holder.bindData(orden[position])
   }
 
 }
