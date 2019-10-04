@@ -32,17 +32,17 @@ private const val ORDERS_LIST = "ORDERS_LIST"
 class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener {
 
   // TODO: Rename and change types of parameters
-  private var orderLists = arrayListOf<TakenOrden>()
+  private var orderLists = ArrayList<Orden>()
   private var listener: HistoryListFragmentListener? = null
   private var listView: RecyclerView? = null
   private var inflater: LayoutInflater? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    orderLists = arguments!!.getParcelableArrayList<TakenOrden>(ORDERS_LIST)!!
+    orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
 
     arguments?.let {
-      orderLists = it.getParcelableArrayList<TakenOrden>(ORDERS_LIST)!!
+      orderLists = it.getParcelableArrayList<Orden>(ORDERS_LIST)!!
     }
   }
 
@@ -58,7 +58,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
     super.onViewCreated(view, savedInstanceState)
     listView = view.findViewById(R.id.ordersListView)
     listView!!.layoutManager = LinearLayoutManager(this.context)
-    listView!!.adapter = OrdenAdapter(arrayListOf<Orden>(), listener = this)
+    listView!!.adapter = OrdenAdapter(orderLists, listener = this)
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -92,7 +92,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
    * for more information.
    */
   interface HistoryListFragmentListener {
-    // TODO: Update argument type and name
+    fun onItemClicked(position: Int)
     fun onFragmentInteraction(uri: Uri)
   }
 
@@ -103,12 +103,12 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
   }
 
   override fun onItemClick(position: Int) {
-    Log.d("HISTORY_FRGAMENT", "Click en item $position")
+    listener!!.onItemClicked(position)
   }
 
 
   override fun onTextInput(input: String, position: Int) {
-    orderLists[position].textInput = input
+   // orderLists[position].textInput = input
     listView!!.adapter!!.notifyDataSetChanged()
   }
 
@@ -133,7 +133,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
     fragment.arguments = params
     return fragment*/
     @JvmStatic
-    fun newInstance(orderList: List<Orden>) : HistoryListFragment {
+    fun newInstance(orderList: ArrayList<Orden>) : HistoryListFragment {
       val params = Bundle()
       params.putParcelableArrayList(ORDERS_LIST,orderList)
       val fragment = HistoryListFragment()

@@ -37,8 +37,8 @@ class  DetalleOrdeActivity : AppCompatActivity(), DetalleOrdeViewHolder.DetalleL
     recyclerDetalle.layoutManager = LinearLayoutManager(this)
     recyclerDetalle.adapter = DetalleOrdeAdapter(arrayListOf<Orden>(), listener = this)
 
-    ApiService.create().getOrdenes().enqueue(object : Callback<List<Orden>>{
-      override fun onFailure(call: Call<List<Orden>>, t: Throwable) {
+    ApiService.create().getOrdenes().enqueue(object : Callback<ArrayList<Orden>>{
+      override fun onFailure(call: Call<ArrayList<Orden>>, t: Throwable) {
         AlertDialog.Builder(getContent())
           .setTitle("ERROR")
           .setMessage("Error con el servidor lo sentimos")
@@ -47,7 +47,7 @@ class  DetalleOrdeActivity : AppCompatActivity(), DetalleOrdeViewHolder.DetalleL
           .show()
       }
 
-      override fun onResponse(call: Call<List<Orden>>, response: Response<List<Orden>>) {
+      override fun onResponse(call: Call<ArrayList<Orden>>, response: Response<ArrayList<Orden>>) {
         val ordenes = response.body()!!
         val adapter = recyclerDetalle.adapter as DetalleOrdeAdapter
         adapter.orden = ordenes

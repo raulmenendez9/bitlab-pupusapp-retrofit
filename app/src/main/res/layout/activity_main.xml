@@ -48,12 +48,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/containerView"
-        android:layout_width="363dp"
-        android:layout_height="468dp"
+        android:layout_width="360dp"
+        android:layout_height="364dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="4dp">
+        tools:layout_editor_absoluteX="1dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -93,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.73" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

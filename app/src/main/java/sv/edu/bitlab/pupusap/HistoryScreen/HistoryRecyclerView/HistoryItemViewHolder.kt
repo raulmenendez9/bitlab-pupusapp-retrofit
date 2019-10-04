@@ -12,24 +12,30 @@ import sv.edu.bitlab.pupusap.R
 
 class HistoryItemViewHolder(itemView : View, val listener:OrdenItemListener) : RecyclerView.ViewHolder(itemView) {
 
-  var fechaTxt: TextView? = null
+  var idTxt: TextView? = null
+  var status: TextView? = null
+  var precioTxt: TextView? = null
   var totalTxt: TextView? = null
-  var ordenarDenuevoBtn: Button? = null
+  var verDetalleBtn: Button? = null
   var contenedor:View? = null
-  var editText:EditText? = null
 
 
   fun bindData(orden: Orden) {
 
-    fechaTxt = itemView.findViewById(R.id.fechaTxt)
+    idTxt = itemView.findViewById(R.id.idTxt)
+    status = itemView.findViewById(R.id.status)
+    precioTxt = itemView.findViewById(R.id.precioTxt)
     totalTxt = itemView.findViewById(R.id.totalTxt)
-    ordenarDenuevoBtn = itemView.findViewById(R.id.ordenarDenuevoBtn)
+    verDetalleBtn = itemView.findViewById(R.id.ordenarDenuevoBtn)
     contenedor = itemView.findViewById(R.id.itemContainer)
-    editText = itemView.findViewById(R.id.input)
-    totalTxt!!.text = orden.textInput
-    fechaTxt!!.text = orden.getFecha()
-    ordenarDenuevoBtn!!.setOnClickListener {
-      listener.onTextInput(editText!!.text.toString(), this.adapterPosition)
+
+    idTxt!!.text = orden.id.toString()
+    status!!.text = orden.status
+    precioTxt!!.text = orden.precio_unidad.toString()
+    totalTxt!!.text = orden.total.toString()
+
+    verDetalleBtn!!.setOnClickListener {
+      listener.onItemClick(this.adapterPosition)
     }
     contenedor!!.setOnClickListener { Log.d("RECYCLER_VIEW", "Click en contenedor") }
 

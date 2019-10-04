@@ -14,7 +14,10 @@ import sv.edu.bitlab.pupusap.OrdenDetalleFragment
 import sv.edu.bitlab.pupusap.R
 import sv.edu.bitlab.pupusap.Relleno.ApiService
 
-class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFragmentListener {
+class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFragmentListener,
+  OrdenDetalleFragment.OrdenDetalleFragmentListener {
+
+  private lateinit var ordenes: ArrayList<Orden>
   override fun onFragmentInteraction(uri: Uri) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
@@ -40,8 +43,8 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
     }
 
     fun loadListFragment(containerID: Int) {
-      ApiService.create().getOrdenes().enqueue(object : Callback<List<Orden>> {
-        override fun onFailure(call: Call<List<Orden>>, t: Throwable) {
+      ApiService.create().getOrdenes().enqueue(object : Callback<ArrayList<Orden>> {
+        override fun onFailure(call: Call<ArrayList<Orden>>, t: Throwable) {
           AlertDialog.Builder(getContent())
             .setTitle("ERROR")
             .setMessage("Error con el servidor lo sentimos")
@@ -50,7 +53,7 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
             .show()
         }
 
-        override fun onResponse(call: Call<List<Orden>>, response: Response<List<Orden>>) {
+        override fun onResponse(call: Call<ArrayList<Orden>>, response: Response<ArrayList<Orden>>) {
           val ordenes = response.body()!!
           val fragment = HistoryListFragment.newInstance(ordenes)
           val builder = supportFragmentManager
@@ -68,28 +71,44 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
 
     }
 
-   /* fun loadDetailFragment(containerID: Int, orden: Orden) {
-      val fragment = OrdenDetalleFragment.newInstance(orden, true)
-      val builder = supportFragmentManager
-        .beginTransaction()
-        .replace(containerID, fragment, "DETAIL_FRAGMENT_TAG")
-        .addToBackStack("DETAIL_FRAGMENT_TAG")
-      builder.commitAllowingStateLoss()
+   fun loadDetailFragment(containerID: Int, orden: ArrayList<Orden>) {
+     ApiService.create().getOrdenes().enqueue(object : Callback<ArrayList<Orden>> {
+       override fun onFailure(call: Call<ArrayList<Orden>>, t: Throwable) {
+         AlertDialog.Builder(getContent())
+           .setTitle("ERROR")
+           .setMessage("Error con el servidor lo sentimos")
+           .setNeutralButton("ok", null)
+           .create()
+           .show()
+       }
 
-    }*/
- /* override fun onSaveInstanceState(outState: Bundle) {
+       override fun onResponse(call: Call<ArrayList<Orden>>, response: Response<ArrayList<Orden>>) {
+         val fragment = OrdenDetalleFragment.newInstance(orden)
+         val builder = supportFragmentManager
+           .beginTransaction()
+           .replace(containerID, fragment, "DETAIL_FRAGMENT_TAG")
+           .addToBackStack("DETAIL_FRAGMENT_TAG")
+         builder.commitAllowingStateLoss()
+
+       }
+
+     })
+
+
+    }
+  override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-    outState.putParcelableArrayList(HISTORIAL_DE_ORDENES, ordenes)
-  }*/
+    outState.putParcelableArrayList("HISTORIAL_DE_ORDENES", ordenes)
+  }
 
-  /*override fun onItemClicked(position: Int) {
+  override fun onItemClicked(position: Int) {
     val orden = ordenes[position]
     if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-      loadDetailFragment(R.id.detailContainer, orden)
+      loadDetailFragment(R.id.detailContainer, orden as ArrayList<Orden>)
     } else {
-      loadDetailFragment(R.id.fragmentContainer, orden)
+      loadDetailFragment(R.id.fragmentContainer, orden as ArrayList<Orden>)
     }
-  }*/
+  }
 
    /* setContentView(R.layout.activity_history)
     val ordenes = TakenOrden.randomOrders()

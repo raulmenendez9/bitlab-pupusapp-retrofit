@@ -14,7 +14,7 @@ interface PupusasApiService{
   fun getRellenos(): Call<List<Relleno>>
 
   @GET("ordens/")
-  fun getOrdenes(): Call<List<Orden>>
+  fun getOrdenes(): Call<ArrayList<Orden>>
 
   @POST("orden/")
   fun submitOrden(@Body params: TakenOrden, @Path("id") id:Int): Call<Orden>
