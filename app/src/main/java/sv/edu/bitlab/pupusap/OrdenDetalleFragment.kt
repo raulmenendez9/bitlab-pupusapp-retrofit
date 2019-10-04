@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 //import sv.edu.bitlab.pupusap.HistoryScreen.VARIABLE
 import sv.edu.bitlab.pupusap.Models.Orden
+import sv.edu.bitlab.pupusap.Models.OrdenPupusas
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +27,7 @@ import sv.edu.bitlab.pupusap.Models.Orden
  */
 class OrdenDetalleFragment : Fragment() {
   // TODO: Rename and change types of parameters
-  private lateinit var orden: Orden
+  private lateinit var orden: ArrayList<Orden>
   private var reorder:Boolean = false
 
   private var listener: OrdenDetalleFragmentListener? = null
@@ -35,7 +36,7 @@ class OrdenDetalleFragment : Fragment() {
    // VARIABLE
     super.onCreate(savedInstanceState)
     arguments?.let {
-      orden = it.getParcelable<Orden>(ORDEN)!!
+      orden = it.getParcelableArrayList<Orden>(ORDEN)!!
      // reorder = it.getBoolean(REORDER, false)
     }
   }
@@ -101,7 +102,7 @@ class OrdenDetalleFragment : Fragment() {
     // TODO: Rename and change types and number of parameters
 
     @JvmStatic
-    fun newInstance(orden: ArrayList<Orden>): OrdenDetalleFragment {
+    fun newInstance(orden: ArrayList<OrdenPupusas>): OrdenDetalleFragment {
       val params =Bundle()
       params.putParcelableArrayList(ORDEN, orden)
       val fragment = OrdenDetalleFragment()

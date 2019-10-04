@@ -10,12 +10,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import sv.edu.bitlab.pupusap.Models.Orden
+import sv.edu.bitlab.pupusap.Models.OrdenPupusas
 import sv.edu.bitlab.pupusap.OrdenDetalleFragment
 import sv.edu.bitlab.pupusap.R
 import sv.edu.bitlab.pupusap.Relleno.ApiService
 
 class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFragmentListener,
   OrdenDetalleFragment.OrdenDetalleFragmentListener {
+
+  private var page =0
 
   private lateinit var ordenes: ArrayList<Orden>
   override fun onFragmentInteraction(uri: Uri) {
@@ -25,6 +28,7 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+//    ordenes =savedInstanceState!!.getParcelableArrayList("HISTORIAL_DE_ORDENES")!!
 
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
       setContentView(R.layout.activity_history_landscape)
@@ -69,32 +73,16 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
 
       })
 
+
     }
 
-   fun loadDetailFragment(containerID: Int, orden: ArrayList<Orden>) {
-     ApiService.create().getOrdenes().enqueue(object : Callback<ArrayList<Orden>> {
-       override fun onFailure(call: Call<ArrayList<Orden>>, t: Throwable) {
-         AlertDialog.Builder(getContent())
-           .setTitle("ERROR")
-           .setMessage("Error con el servidor lo sentimos")
-           .setNeutralButton("ok", null)
-           .create()
-           .show()
-       }
-
-       override fun onResponse(call: Call<ArrayList<Orden>>, response: Response<ArrayList<Orden>>) {
+   fun loadDetailFragment(containerID: Int, orden: ArrayList<OrdenPupusas>) {
          val fragment = OrdenDetalleFragment.newInstance(orden)
          val builder = supportFragmentManager
            .beginTransaction()
            .replace(containerID, fragment, "DETAIL_FRAGMENT_TAG")
            .addToBackStack("DETAIL_FRAGMENT_TAG")
          builder.commitAllowingStateLoss()
-
-       }
-
-     })
-
-
     }
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
@@ -102,12 +90,30 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
   }
 
   override fun onItemClicked(position: Int) {
-    val orden = ordenes[position]
-    if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-      loadDetailFragment(R.id.detailContainer, orden as ArrayList<Orden>)
-    } else {
-      loadDetailFragment(R.id.fragmentContainer, orden as ArrayList<Orden>)
-    }
+    ApiService.create().getOrdenes().enqueue(object : Callback<ArrayList<Orden>> {
+      override fun onFailure(call: Call<ArrayList<Orden>>, t: Throwable) {
+        AlertDialog.Builder(getContent())
+          .setTitle("ERROR")
+          .setMessage("Error con el servidor lo sentimos")
+          .setNeutralButton("ok", null)
+          .create()
+          .show()
+      }
+
+      override fun onResponse(call: Call<ArrayList<Orden>>, response: Response<ArrayList<Orden>>) {
+        val ordens = response.body()!!
+        var orden = ordens[position].arroz + ordens[position].maiz
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+          loadDetailFragment(R.id.detailContainer, orden as ArrayList<OrdenPupusas>)
+        } else {
+          loadDetailFragment(R.id.fragmentContainer, orden as ArrayList<OrdenPupusas>)
+          page ++
+        }
+
+      }
+
+    })
+
   }
 
    /* setContentView(R.layout.activity_history)
@@ -121,6 +127,16 @@ class HistoryActivity : AppCompatActivity(), HistoryListFragment.HistoryListFrag
    fun getContent(): Context {
      return this
    }
+
+  override fun onBackPressed() {
+    if (page > 0){
+      page --
+      super.onBackPressed()
+    }else{
+      finish()
+
+    }
+  }
   companion object {
     const val LIST_FRAGMENT_TAG = "ORDENES_HISTORY"
     const val DETAIL_FRAGMENT_TAG = "DETAIL_FRAGMENT_TAG"

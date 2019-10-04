@@ -15,6 +15,7 @@ class ApiService {
 
       val logging = HttpLoggingInterceptor()
       logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+      httpClient.addInterceptor(logging)
 
 
       val retrofit =Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://pupusapp-api.herokuapp.com/").client(httpClient.build()).build()
