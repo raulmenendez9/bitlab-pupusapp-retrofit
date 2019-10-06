@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import sv.edu.bitlab.pupusap.DetalleOrden.DetalleOrdeAdapter
+import sv.edu.bitlab.pupusap.DetalleOrden.DetalleOrdeViewHolder
 //import sv.edu.bitlab.pupusap.HistoryScreen.VARIABLE
 import sv.edu.bitlab.pupusap.Models.Orden
 import sv.edu.bitlab.pupusap.Models.OrdenPupusas
@@ -25,20 +29,33 @@ import sv.edu.bitlab.pupusap.Models.OrdenPupusas
  * create an instance of this fragment.
  *
  */
-class OrdenDetalleFragment : Fragment() {
+class OrdenDetalleFragment : Fragment(), DetalleOrdeViewHolder.DetalleListener {
+  override fun displayDetalle(detalle: TextView, precio: TextView, contador: Int, index: Int) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
   // TODO: Rename and change types of parameters
-  private lateinit var orden: ArrayList<Orden>
+   private lateinit var maiz: ArrayList<OrdenPupusas>
+  private lateinit var arroz: ArrayList<OrdenPupusas>
   private var reorder:Boolean = false
+  private var orderLists = arrayListOf<OrdenPupusas>()
 
   private var listener: OrdenDetalleFragmentListener? = null
+  private var listView: RecyclerView? = null
+  private lateinit var detalle:List<Orden>
+  private lateinit var rellenoMaiz: String
+  private lateinit var rellenoArroz: String
 
   override fun onCreate(savedInstanceState: Bundle?) {
    // VARIABLE
     super.onCreate(savedInstanceState)
+    /*orderLists = arguments!!.getParcelableArrayList<OrdenPupusas>(ORDEN)!!
     arguments?.let {
-      orden = it.getParcelableArrayList<Orden>(ORDEN)!!
+      maiz = it.getParcelableArrayList<OrdenPupusas>(ORDEN)!!
+      //arroz=it.getParcelableArrayList<OrdenPupusas>("ARROZ")!!
+     orderLists = maiz
      // reorder = it.getBoolean(REORDER, false)
-    }
+    }*/
   }
 
   override fun onCreateView(
@@ -46,17 +63,14 @@ class OrdenDetalleFragment : Fragment() {
     savedInstanceState: Bundle?
   ): View? {
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_detalle_orden, container, false)
+    return inflater.inflate(R.layout.detalle_orden_activity, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val confirmarBoton = view.findViewById<Button>(R.id.irACheckourBtn)
-    if(reorder){
-      confirmarBoton.text = "Volver a ordenar"
-    } else {
-      confirmarBoton.text = "Confirmar orden"
-    }
+    listView = view.findViewById(R.id.recyclerDetalle)
+    listView!!.layoutManager = LinearLayoutManager(this.context)
+    listView!!.adapter = DetalleOrdeAdapter(detalle,rellenoMaiz,rellenoArroz, listener = this)
   }
 
   override fun onAttach(context: Context) {
@@ -102,11 +116,12 @@ class OrdenDetalleFragment : Fragment() {
     // TODO: Rename and change types and number of parameters
 
     @JvmStatic
-    fun newInstance(orden: ArrayList<OrdenPupusas>): OrdenDetalleFragment {
+    fun newInstance(detalle:List<Orden>, rellenoMaiz:String, rellenoArroz:String): OrdenDetalleFragment {
       val params =Bundle()
-      params.putParcelableArrayList(ORDEN, orden)
       val fragment = OrdenDetalleFragment()
-      fragment.arguments = params
+      fragment.detalle=detalle
+      fragment.rellenoMaiz=rellenoMaiz
+      fragment.rellenoArroz=rellenoArroz
       return fragment
       }
   }

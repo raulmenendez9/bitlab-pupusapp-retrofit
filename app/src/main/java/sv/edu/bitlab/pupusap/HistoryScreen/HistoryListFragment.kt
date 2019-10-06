@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sv.edu.bitlab.pupusap.HistoryScreen.HistoryRecyclerView.HistoryItemViewHolder
 import sv.edu.bitlab.pupusap.HistoryScreen.HistoryRecyclerView.OrdenAdapter
 import sv.edu.bitlab.pupusap.Models.Orden
+import sv.edu.bitlab.pupusap.Models.OrdenPupusas
 import sv.edu.bitlab.pupusap.Models.TakenOrden
 
 import sv.edu.bitlab.pupusap.R
@@ -36,7 +37,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
   private var listener: HistoryListFragmentListener? = null
   private var listView: RecyclerView? = null
   private var inflater: LayoutInflater? = null
-
+ val detalle= ArrayList<Orden>()
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
@@ -59,6 +60,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
     listView = view.findViewById(R.id.ordersListView)
     listView!!.layoutManager = LinearLayoutManager(this.context)
     listView!!.adapter = OrdenAdapter(orderLists, listener = this)
+
   }
 
   // TODO: Rename method, update argument and hook method into UI event
@@ -92,7 +94,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
    * for more information.
    */
   interface HistoryListFragmentListener {
-    fun onItemClicked(position: Int)
+    fun onItemClicked(detalle: ArrayList<Orden>,position: Int)
     fun onFragmentInteraction(uri: Uri)
   }
 
@@ -103,7 +105,7 @@ class HistoryListFragment : Fragment(), HistoryItemViewHolder.OrdenItemListener 
   }
 
   override fun onItemClick(position: Int) {
-    listener!!.onItemClicked(position)
+    listener!!.onItemClicked(detalle,position)
   }
 
 

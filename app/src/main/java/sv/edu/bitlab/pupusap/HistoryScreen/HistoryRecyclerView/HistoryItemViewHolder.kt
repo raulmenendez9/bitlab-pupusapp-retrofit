@@ -20,6 +20,7 @@ class HistoryItemViewHolder(itemView : View, val listener:OrdenItemListener) : R
   var contenedor:View? = null
 
 
+
   fun bindData(orden: Orden) {
 
     idTxt = itemView.findViewById(R.id.idTxt)
